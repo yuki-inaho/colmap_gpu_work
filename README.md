@@ -5,7 +5,7 @@
 make build
 ```
 
-- run
+- run (launch the colmap GUI window)
 ```
 make run
 ```
