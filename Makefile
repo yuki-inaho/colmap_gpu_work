@@ -18,10 +18,10 @@ run:
 	--device=/dev/dri:/dev/dri \
 	--gpus all \
 	--mount type=bind,src=/dev,dst=/dev,readonly \
-	--mount type=bind,src=images,dst=/root/images,readonly \
-	--mount type=bind,src=scene,dst=/root/scene\
+	--mount type=bind,src=${PWD}/images,dst=/images,readonly \
+	--mount type=bind,src=${PWD}/scene,dst=/scene \
 	--env ROS_MASTER_URI=http://${HOST}:11311 \
-	colmap-gpu:1.0 /bin/bash -c "source /opt/ros/noetic/setup.bash && /opt/ros/noetic/bin/colmap -d /setting/setting.colmap"
+	colmap-gpu:1.0 /bin/bash -c "colmap gui"
 
 .PHONY: run_debug
 run_debug:
@@ -36,5 +36,7 @@ run_debug:
 	--device=/dev/dri:/dev/dri \
 	--gpus all \
 	--mount type=bind,src=/dev,dst=/dev,readonly \
+	--mount type=bind,src=${PWD}/images,dst=/images,readonly \
+	--mount type=bind,src=${PWD}/scene,dst=/scene \
 	--env ROS_MASTER_URI=http://${HOST}:11311 \
 	colmap-gpu:1.0 /bin/bash
