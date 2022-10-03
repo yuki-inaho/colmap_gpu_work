@@ -10,6 +10,8 @@ run:
 	xhost + local:root
 	sudo docker run -it \
 	--network="host" --ipc="host" \
+    --user $(id -u):$(id -g) \
+    --userns=host \
 	--add-host=${HOST}:${ADDR} \
 	--env=DISPLAY=$(DISPLAY) \
 	--env=QT_X11_NO_MITSHM=1 \
@@ -17,6 +19,9 @@ run:
 	--privileged \
 	--device=/dev/dri:/dev/dri \
 	--gpus all \
+    -v ${HOME}/.Xauthority:/home/$(whoami)/.Xauthority:ro \
+    -v /etc/passwd:/etc/passwd:ro \
+    -v /etc/group:/etc/group:ro \
 	--mount type=bind,src=/dev,dst=/dev,readonly \
 	--mount type=bind,src=${PWD}/images,dst=/images,readonly \
 	--mount type=bind,src=${PWD}/scene,dst=/scene \
@@ -28,6 +33,8 @@ run_debug:
 	xhost + local:root
 	sudo docker run -it \
 	--network="host" --ipc="host" \
+    --user $(id -u):$(id -g) \
+    --userns=host \
 	--add-host=${HOST}:${ADDR} \
 	--env=DISPLAY=$(DISPLAY) \
 	--env=QT_X11_NO_MITSHM=1 \
@@ -35,6 +42,9 @@ run_debug:
 	--privileged \
 	--device=/dev/dri:/dev/dri \
 	--gpus all \
+    -v ${HOME}/.Xauthority:/home/$(whoami)/.Xauthority:ro \
+    -v /etc/passwd:/etc/passwd:ro \
+    -v /etc/group:/etc/group:ro \
 	--mount type=bind,src=/dev,dst=/dev,readonly \
 	--mount type=bind,src=${PWD}/images,dst=/images,readonly \
 	--mount type=bind,src=${PWD}/scene,dst=/scene \
