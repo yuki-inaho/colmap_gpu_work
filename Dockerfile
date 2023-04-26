@@ -1,6 +1,6 @@
 # From https://github.com/colmap/colmap/blob/dev/docker/Dockerfile
 
-FROM nvidia/cuda:11.4.0-devel-ubuntu20.04
+FROM nvidia/cuda:11.6.0-devel-ubuntu20.04
 
 # Prevent stop building ubuntu at time zone selection.
 ENV DEBIAN_FRONTEND=noninteractive
@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     libboost-system-dev \
     libboost-test-dev \
     libeigen3-dev \
+    libflann-dev \
     libsuitesparse-dev \
     libfreeimage-dev \
     libmetis-dev \
@@ -24,7 +25,8 @@ RUN apt-get update && apt-get install -y \
     libglew-dev \
     qtbase5-dev \
     libqt5opengl5-dev \
-    libcgal-dev
+    libcgal-dev \
+    sqlite3
 
 # Build and install ceres solver
 RUN apt-get -y install \
@@ -54,4 +56,4 @@ RUN cd colmap && \
 	cd build && \
 	cmake .. && \
 	make -j4 && \
-	make install
+	make install ./
